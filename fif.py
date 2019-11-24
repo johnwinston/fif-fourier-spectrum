@@ -82,7 +82,6 @@ def gOmega(x):
       gsum += ((first * second) + third)
    return np.sqrt(np.power(scipy.real(gsum), 2) + np.power(scipy.imag(gsum),2))
 
-
 def qOmega(x):
    sum = 0
    for i in range(int(nMaps)):
