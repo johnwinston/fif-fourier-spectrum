@@ -1,5 +1,5 @@
 # fif-fourier-spectrum
-[Work in progress]
+[Work in progress]\n
 Spectrum of Fractal Interpolation Functions - Nikoloas Vasiloglou, Petros Maragos
 https://arxiv.org/pdf/0906.5278.pdf
 
