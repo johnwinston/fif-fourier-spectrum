@@ -7,8 +7,8 @@ from scipy.integrate import quad
 from matplotlib.pyplot import draw, show
 
 values = [0, 0, 0.25, 1, 0.5, 1.4, 0.75, -0.5, 1, 0]
-timeSteps = 100
-globalIt = 1
+timeSteps = 1000
+globalIt = 2
 
 d = [.4, .8, .7, .4]
 a = []
