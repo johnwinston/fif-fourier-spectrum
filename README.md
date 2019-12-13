@@ -6,4 +6,4 @@ Edit 'values' with your own data points in the form [x1, y1, x2, y2, x3, y3..] e
 Spectrum of Fractal Interpolation Functions - Nikoloas Vasiloglou, Petros Maragos  
 https://arxiv.org/pdf/0906.5278.pdf
 
-![alt text](https://github.com/johnwinston/fif-fourier-spectrum/blob/master/fif.png)
+![alt text](https://github.com/johnwinston/fif-fourier-spectrum/blob/master/fif pic.png)
