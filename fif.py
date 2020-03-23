@@ -3,8 +3,6 @@ import scipy
 import quadpy
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import quad
-from matplotlib.pyplot import draw, show
 
 values = [0, 0, 0.25, 1, 0.5, 1.4, 0.75, -0.5, 1, 0]
 timeSteps = 1000
@@ -18,12 +16,6 @@ f = []
 
 nMaps = int((len(values)/2)-1)
 print("nMaps: ", nMaps)
-
-# Picecewise linear function between interpolation points
-def pieceWise(x):
-   z = np.array([(c[i]*((x - e[i]) / a[i]) + f[i]) * uFunc(x,i)
-                 for i in range(nMaps)])
-   return z.sum()
 
 # FIF
 def FIF(x, it):
@@ -54,64 +46,13 @@ def simpleParameters(values):
       f.append(values[k-1])
       k=k+2
 
-def gOmega(x):
-   if (x == 0):
-      return 0
-   p = np.array([(cmath.exp((-1j * x) * (i / nMaps))  -
-                  cmath.exp((-1j * x) * ((i + 1) / nMaps)))
-                  / ((1j * x) * (1j * x)) 
-                 for i in range(nMaps)])
-   o = np.array([((c[i] / a[i]) + ((1j * x) *
-                 (f[i] - ((c[i]*e[i])/a[i]))))
-                 for i in range(nMaps)])
-   l = np.array([(c[i] / a[i]) * ((((i / nMaps) *
-                 (cmath.exp((-1j * x) * (i / nMaps)))) -
-                 (((i + 1) / nMaps) * (cmath.exp((-1j * x) *
-                 ((i + 1) / nMaps))))) / (1j * x))
-                 for i in range(nMaps)])
-   k = np.array([(p[i] * o[i]) + l[i]
-                 for i in range(nMaps)])
-   return np.sqrt(np.power(scipy.real(k.sum()),2) +
-                  np.power(scipy.imag(k.sum()),2))
-
-# DFT of vertical scaling factors
-def qOmega(x):
-   y = np.array([d[i]*cmath.exp(-1j*((x*i)/nMaps))
-                 for i in range(nMaps)])
-   return np.sqrt(np.power(scipy.real(a[0]*y.sum()),2) +
-                  np.power(scipy.imag(a[0]*y.sum()),2))
-
-# Spectrum
-def quadInt(func):
-   def real_func(x):
-      f = FIF(x, globalIt)
-      return scipy.real(f*func(x))
-   def imag_func(x):
-      f = FIF(x, globalIt)
-      return scipy.imag(f*func(x))
-   real_integral = quad(real_func, 0, 1)
-   imag_integral = quad(imag_func, 0, 1)
-   return np.sqrt(np.power(real_integral[0],2) +
-                  np.power(imag_integral[0],2))
-
-def everything(t):
-   return qOmega(t)*quadInt(lambda x: (scipy.exp(-1j*(a[0]*t)*x)))+gOmega(t)
-
 ###########################################################
 
 time = np.linspace(0, 1,num=timeSteps)
 simpleParameters(values)
 
 FIFPoints = np.array([FIF(t, globalIt) for t in time])
-plt.subplot(111)
 plt.plot(time, FIFPoints)
-
-'''
-time = np.linspace(1, 100, num=timeSteps)
-integrationPoints = np.array([everything(t) for t in time])
-plt.subplot(212)
-plt.plot(time, integrationPoints)
-'''
 
 print(values)
 print("a:", a)
